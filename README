@@ -1,0 +1,5 @@
+##GO_BABER
+
+####comandos Uteis
+- yarn typeorm migration:run
+- yarn dev:server

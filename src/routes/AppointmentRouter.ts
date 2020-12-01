@@ -13,19 +13,19 @@ appointmentRouter.get('/', (request, response) => {
   return response.json(appointments);
 });
 
-appointmentRouter.post('/', (request, response) => {
+appointmentRouter.post('/', async (request, response) => {
   const { provider, date } = request.body;
   console.log(request.body);
   try {
-    // const parsedDate = parseISO(date);
+    const parsedDate = parseISO(date);
 
-    // const createAppointmentService = new CreateAppointmentService();
+    const createAppointmentService = new CreateAppointmentService();
 
-    // const appointment = await createAppointmentService.execute({
-    //   date: parsedDate,
-    //   provider,
-    // });
-    return response.json({ provider, date });
+    const appointment = await createAppointmentService.execute({
+      date: parsedDate,
+      provider,
+    });
+    return response.json(appointment);
   } catch (err) {
     return response.status(400).json({ message: err.message });
   }
