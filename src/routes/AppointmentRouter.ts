@@ -7,9 +7,9 @@ import AppointmentRepository from '../repositories/AppointmentsRepository';
 
 const appointmentRouter = Router();
 
-appointmentRouter.get('/', (request, response) => {
+appointmentRouter.get('/', async (request, response) => {
   const appointmentRepository = getCustomRepository(AppointmentRepository);
-  const appointments = appointmentRepository.find();
+  const appointments = await appointmentRepository.find();
   return response.json(appointments);
 });
 
