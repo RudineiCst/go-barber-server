@@ -15,7 +15,7 @@ appointmentRouter.get('/', async (request, response) => {
 
 appointmentRouter.post('/', async (request, response) => {
   const { provider_id, date } = request.body;
-  console.log(request.body)
+  //console.log(request.body)
   try {
     const parsedDate = parseISO(date);
 
