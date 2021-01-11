@@ -36,6 +36,15 @@ ensureAuthenticated,
 upload.single('avatar'),
 async (request, response)=>{
   console.log(request.file);
+  try{
+    const user_id = request.user.id;
+    const avatarFilename = request.file.filename;
+
+
+
+  }catch{
+
+  }
 
   response.json({ok :true});
 })
