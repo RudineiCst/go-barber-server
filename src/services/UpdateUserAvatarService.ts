@@ -9,7 +9,7 @@ interface Request{
   avatarFilename:string
 }
 class UpdateUserAvatarService{
-  public async execute({user_id, avatarFilename}:Request):Promise<void>{
+  public async execute({user_id, avatarFilename}:Request):Promise<User>{
   const userRepository = getRepository(User);
 
   const user = await userRepository.findOne(user_id)
@@ -19,14 +19,22 @@ class UpdateUserAvatarService{
 
   if(user.avatar){
     //Deletar o avatar
-    const usaerAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-    const userAvatarExists = await fs.promises.stat(usaerAvatarFilePath);
+    const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
+    // 1° parametro é o caminho do novo arquivo que ira subistituir o caminho do 2°parametro
+    // que já estava armazenado
+    const userAvatarExists = await fs.promises.stat(userAvatarFilePath);
+    //👆faz uma verificação de status, para saber se existe arquivo
 
     if(!userAvatarExists){
-      throw new Error('erro');
+      await fs.promises.unlink(userAvatarFilePath)
     }
   }
 
+  user.avatar = avatarFilename;
 
+  await userRepository.save(user);
+
+  return user
   }
 }
+export default UpdateUserAvatarService;
